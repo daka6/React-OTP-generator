@@ -1,0 +1,74 @@
+import React from "react";
+import { useState } from "react";
+
+const init = 5;
+
+//hasta aca el Counter empieza en 5 y cuando llega a 0 para
+const Counter = () => {
+  const [count, setCount] = useState(init);
+
+  const handleTimer = () => {
+    if (count <= 0) {
+      setCount(init);
+      console.log(count);
+      return;
+    } else {
+      setCount(count - 1);
+      console.log("count: ", count);
+    }
+  };
+
+  return (
+    <>
+      <div>Counter</div>
+      <p>{count}</p>
+      <button onClick={handleTimer}>Empezar</button>
+    </>
+  );
+};
+
+export default Counter;
+
+//funciona
+const [count, setCount] = useState(init);
+
+const handleTimer = () => {
+  if (count <= 0) {
+    setCount(init);
+    console.log(count);
+    return;
+  } else {
+    setCount((prevCount) => prevCount - 1);
+    console.log("count: ", count);
+  }
+};
+// useEffect(() => {
+//   const interval = setInterval(() => {
+//     setCount((prevcount) => prevcount + 1);
+//   }, 1000);
+
+//   return () => clearInterval(interval);
+// }, []);
+
+
+const [count, setCount] = useState(init);
+
+  const restarAutomatico = () => {
+    setInterval(() => {
+      if (count <= 0) {
+        setCount(init);
+        return;
+      } else {
+        let newCount = count - 1;
+        setCount(newCount);
+      }
+    }, 1000);
+  };
+  // const restarMecanico = () => {
+  //   if (count <= 0) {
+  //     setCount(init);
+  //     return;
+  //   } else {
+  //     setCount((prevcount) => prevcount - 1);
+  //   }
+  // };

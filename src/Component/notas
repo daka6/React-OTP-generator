@@ -1,0 +1,49 @@
+import { useEffect, useState } from "react";
+import { genOTP } from "../Helper/genOTP";
+import { useRef } from "react";
+
+function App() {
+  const [code, setCode] = useState("Click 'Generate OTP' to get a code");
+  const otpDisplayRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const [count, setCount] = useState(5);
+
+  const handleClick = () => {
+    setCode(genOTP());
+    setVisible(true);
+    otpDisplayRef.current.style = "color: #36d804";
+  };
+
+  const counter = () => {
+    let count = 5;
+    const intervalo = setInterval(function () {
+      console.log(count);
+      setCount(count--);
+      //count--;
+      if (count < 0) {
+        clearInterval(intervalo);
+        console.log("OTP expired. Click the button to generate a new OTP.");
+      }
+    }, 1000);
+  };
+
+  useEffect(() => {
+    counter();
+  }, [code]);
+
+  return (
+    <div className="container">
+      <h1 id="otp-title">OTP Generator</h1>
+      <h2 id="otp-display" ref={otpDisplayRef}>
+        {code}
+      </h2>
+      {visible && <p id="otp-timer">Expires in: {count} seconds</p>}
+
+      <button id="generate-otp-button" onClick={handleClick}>
+        Generate OTP
+      </button>
+    </div>
+  );
+}
+
+export default App;
